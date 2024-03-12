@@ -1300,10 +1300,9 @@ contains
        index_g2x_Fogg_rofl   = mct_aVect_indexRA(g2x_g,'Fogg_rofl')
        index_g2x_Fogg_rofi   = mct_aVect_indexRA(g2x_g,'Fogg_rofi')
        index_g2x_Figg_rofi   = mct_aVect_indexRA(g2x_g,'Figg_rofi')
-
-       index_x2g_Flgl_qice   = mct_aVect_indexRA(x2g_g,'Flgl_qice') !SFP added
-
+       index_x2g_Flgl_qice   = mct_aVect_indexRA(x2g_g,'Flgl_qice')
     end if
+
 
     ip = p_inst
     ic = c_glc_gs
@@ -1317,16 +1316,17 @@ contains
     end do
     budg_dataL(f_hioff,ic,ip) = -budg_dataL(f_wioff,ic,ip)*shr_const_latice
 
-    ! SFP added (start)
-    ip = p_day 
-    ic = c_glc_gs
+    ip = p_inst         
+    !SFP: unclear if next should be 'send' or 'recieve' index but for now we think send (because of x2g),
+    ! but budget results don't seem to be sensitive to this choice (same numbers appear using either).
+    ic = c_glc_gs      ! cpl send
+    !ic = c_glc_gr       ! cpl receive 
     lSize = mct_avect_lSize(x2g_g)
     do n=1,lSize
        ca_g =  dom_g%data%rAttr(kArea,n)
-       nf = f_wsmb; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) - ca_g*x2g_g%rAttr(index_x2g_Flgl_qice,n) 
+       nf = f_wsmb; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) + ca_g*x2g_g%rAttr(index_x2g_Flgl_qice,n) 
     end do
-    budg_dataL(f_hsmb,ic,ip) = -budg_dataL(f_wsmb,ic,ip)*shr_const_latice 
-   ! SFP added (end)
+    budg_dataL(f_hsmb,ic,ip) = budg_dataL(f_wsmb,ic,ip)*shr_const_latice 
 
     first_time = .false.
 
