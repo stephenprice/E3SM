@@ -267,6 +267,7 @@ module seq_diag_mct
   integer :: index_l2x_Flrl_irrig
   integer :: index_l2x_Flrl_wslake
 
+  integer :: index_l2x_Flgl_qice(0:10) !SFP added
 
   integer :: index_x2l_Faxa_lwdn
   integer :: index_x2l_Faxa_rainc
@@ -873,13 +874,17 @@ contains
     type(mct_aVect), pointer :: l2x_l        ! model to drv bundle
     type(mct_aVect), pointer :: x2l_l        ! drv to model bundle
     type(mct_ggrid), pointer :: dom_l
-    integer(in)              :: n,ic,nf,ip ! generic index
+    integer(in)              :: n,ic,nf,ip   ! generic index
     integer(in)              :: kArea        ! index of area field in aVect
     integer(in)              :: kl           ! fraction indices
     integer(in)              :: lSize        ! size of aVect
     real(r8)                 :: ca_l         ! area of a grid cell
     logical,save             :: first_time    = .true.
     logical,save             :: flds_wiso_lnd = .false.
+
+    character(len=64)        :: name         !SFP: added this and next 2
+    character(len= 2)        :: cnum         
+    integer(in)              :: num               
 
     !----- formats -----
     character(*),parameter :: subName = '(seq_diag_lnd_mct) '
@@ -916,6 +921,13 @@ contains
           index_l2x_Flrl_irrig  = mct_aVect_indexRA(l2x_l,'Flrl_irrig', perrWith='quiet')
           index_l2x_Flrl_wslake   = mct_aVect_indexRA(l2x_l,'Flrl_wslake')
 
+          do num=0,10 !SFP: change later to 0,glc_nec_max (no elev classes)
+             write(cnum,'(i2.2)') num
+             name = 'Flgl_qice' // cnum
+             index_l2x_Flgl_qice(num) = mct_avect_indexRA(l2x_l,trim(name)) !SFP added
+             !index_l2x_Flgl_qice   = mct_aVect_indexRA(l2x_l,'Flgl_qice')
+          end do
+
           index_l2x_Fall_evap_16O    = mct_aVect_indexRA(l2x_l,'Fall_evap_16O',perrWith='quiet')
           if ( index_l2x_Fall_evap_16O /= 0 ) flds_wiso_lnd = .true.
           if ( flds_wiso_lnd )then
@@ -950,6 +962,10 @@ contains
              nf = f_wroff ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) - ca_l*l2x_l%rAttr(index_l2x_Flrl_irrig,n)
           end if
           nf = f_wioff ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) - ca_l*l2x_l%rAttr(index_l2x_Flrl_rofi,n)
+          
+          do num=0,10 !SFP: change later to 0,glc_nec_max (no elev classes)
+               nf = f_wsmb ; budg_dataL(nf,ic,ip) = budg_dataL(nf,ic,ip) - ca_l*l2x_l%rAttr(index_l2x_Flgl_qice(num),n) !SFP added 
+          end do
 
           if ( flds_wiso_lnd )then
              nf = f_wevap_16O;
@@ -983,7 +999,11 @@ contains
                   ca_l*l2x_l%rAttr(index_l2x_Flrl_rofi_HDO,n)
           end if
        end do
+
        budg_dataL(f_hioff,ic,ip) = -budg_dataL(f_wioff,ic,ip)*shr_const_latice
+
+       budg_dataL(f_hsmb,ic,ip) = budg_dataL(f_wsmb,ic,ip)*shr_const_latice !SFP add
+
     end if
 
     if (present(do_x2l)) then
@@ -1300,12 +1320,15 @@ contains
        index_g2x_Fogg_rofl   = mct_aVect_indexRA(g2x_g,'Fogg_rofl')
        index_g2x_Fogg_rofi   = mct_aVect_indexRA(g2x_g,'Fogg_rofi')
        index_g2x_Figg_rofi   = mct_aVect_indexRA(g2x_g,'Figg_rofi')
-       index_x2g_Flgl_qice   = mct_aVect_indexRA(x2g_g,'Flgl_qice')
+
+       index_x2g_Flgl_qice   = mct_aVect_indexRA(x2g_g,'Flgl_qice') !SFP: might be cleaner to do "x2g" in its own section?
+
     end if
 
 
     ip = p_inst
     ic = c_glc_gs
+    !ic = c_glc_gr !SFP: should this actually be used here? other sections of this code use"r" for c2x and "s" for x2c
     kArea = mct_aVect_indexRA(dom_g%data,afldname)
     lSize = mct_avect_lSize(g2x_g)
     do n=1,lSize
@@ -1317,7 +1340,7 @@ contains
     budg_dataL(f_hioff,ic,ip) = -budg_dataL(f_wioff,ic,ip)*shr_const_latice
 
     ip = p_inst         
-    !SFP: unclear if next should be 'send' or 'recieve' index but for now we think send (because of x2g),
+    !SFP: unclear if next should be 'send' or 'receive' index but for now we think send (because of x2g),
     ! but budget results don't seem to be sensitive to this choice (same numbers appear using either).
     ic = c_glc_gs      ! cpl send
     !ic = c_glc_gr       ! cpl receive 
