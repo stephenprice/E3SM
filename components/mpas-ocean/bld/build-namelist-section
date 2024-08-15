@@ -229,7 +229,8 @@ add_default($nl, 'config_flux_attenuation_coefficient_runoff');
 # Namelist group: coupling #
 ############################
 
-add_default($nl, 'config_remove_AIS_coupler_runoff');
+add_default($nl, 'config_remove_ais_river_runoff');
+add_default($nl, 'config_remove_ais_ice_runoff');
 
 ######################################
 # Namelist group: shortwaveRadiation #
@@ -303,9 +304,11 @@ add_default($nl, 'config_land_ice_flux_cp_ice');
 add_default($nl, 'config_land_ice_flux_rho_ice');
 add_default($nl, 'config_land_ice_flux_explicit_topDragCoeff');
 add_default($nl, 'config_land_ice_flux_ISOMIP_gammaT');
-add_default($nl, 'config_land_ice_flux_rms_tidal_velocity');
 add_default($nl, 'config_land_ice_flux_jenkins_heat_transfer_coefficient');
 add_default($nl, 'config_land_ice_flux_jenkins_salt_transfer_coefficient');
+add_default($nl, 'config_land_ice_flux_tidal_Jourdain_alpha');
+add_default($nl, 'config_land_ice_flux_tidal_Jourdain_A0');
+add_default($nl, 'config_land_ice_flux_tidal_Jourdain_U0');
 
 #############################
 # Namelist group: advection #
