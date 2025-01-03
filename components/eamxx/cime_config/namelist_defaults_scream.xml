@@ -230,7 +230,7 @@ be lost if SCREAM_HACK_XML is not enabled.
       <enable_column_conservation_checks>false</enable_column_conservation_checks>
       <check_flux_state_consistency>false</check_flux_state_consistency>
       <lambda_low type="real" doc="minimum value of stability correction.">0.001</lambda_low>
-      <lambda_high type="real" doc="maximum value of stability correction.">0.04</lambda_high>
+      <lambda_high type="real" doc="maximum value of stability correction.">0.08</lambda_high>
       <lambda_slope type="real" doc="slope of change from lambda_low to lambda_high.">2.65</lambda_slope>
       <lambda_thresh type="real" doc="stability threshold for which to apply more stability correction.">0.02</lambda_thresh>
       <thl2tune type="real" doc="Temperature variance tuning factor">1.0</thl2tune>
@@ -427,6 +427,9 @@ be lost if SCREAM_HACK_XML is not enabled.
       <ML_correction_unit_test type="logical">false</ML_correction_unit_test>
     </mlcorrection>
 
+    <!-- IOPForcing -->
+    <iop_forcing inherit="atm_proc_base" />
+
     <!-- For internal testing only -->
     <testOnly inherit="atm_proc_base">
       <my_param type="array(integer)">1,2</my_param>
@@ -556,6 +559,7 @@ be lost if SCREAM_HACK_XML is not enabled.
 
     <physics inherit="atm_proc_group">
       <atm_procs_list>mac_aero_mic,rrtmgp</atm_procs_list>
+      <atm_procs_list COMPSET=".*DP-EAMxx">iop_forcing,mac_aero_mic,rrtmgp</atm_procs_list>
     </physics>
   </atmosphere_processes_defaults>
 
@@ -717,6 +721,7 @@ be lost if SCREAM_HACK_XML is not enabled.
   <!-- driver_options options for scream -->
   <driver_options>
     <atmosphere_dag_verbosity_level>0</atmosphere_dag_verbosity_level>
+    <save_field_manager_dictionary type="logical">false</save_field_manager_dictionary>
     <atm_log_level type="string"
                    valid_values="trace,debug,info,warn,error"
                    doc="Verbosity level for the atm logger">
