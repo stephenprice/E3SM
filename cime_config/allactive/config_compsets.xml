@@ -509,6 +509,12 @@
   <lname>20TRSOI_EAM%CMIP6_ELM%CNPRDCTCBCTOP_MPASSI_MPASO_MOSART_MALI_SWAV</lname>
 </compset>
 
+<!-- Same as WCYCL2010NS but with MALI active (note no explicit link to spun up ocean/ice) -->
+<compset>
+  <alias>BGWCYCL2010</alias>
+  <lname>2010_EAM%CMIP6_ELM%CNPRDCTCBCTOP_MPASSI_MPASO_MOSART_MALI_SWAV</lname>
+</compset>
+
 <!-- EAMXX fully coupled compset -->
 
 <compset>
