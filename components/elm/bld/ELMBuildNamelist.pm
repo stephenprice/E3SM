@@ -2367,9 +2367,9 @@ sub setup_logic_glacier {
     fatal_error("$var set to $val does NOT agree with -glc_nec argument of $nl_flags->{'glc_nec'} (set with GLC_NEC env variable)\n");
   }
   if ( $nl_flags->{'glc_nec'} > 0 ) {
-    if (! $opts->{'glc_present'}) {
-      fatal_error("glc_nec is non-zero, but glc_present is not set (probably due to trying to use a stub glc model)");
-    }
+	  #if (! $opts->{'glc_present'}) {
+	  #fatal_error("glc_nec is non-zero, but glc_present is not set (probably due to trying to use a stub glc model)");
+	  #}
 
     foreach my $var ( "glc_smb" ) {
       if ( $opts->{$var} ne "default" ) {
