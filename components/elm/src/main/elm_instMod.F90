@@ -350,8 +350,11 @@ contains
            ! amschnei@uci.edu: Initializing "deep firn" for glacier columns
            if (lun_pp%itype(l) == istice .or. lun_pp%itype(l) == istice_mec) then
               ! land ice (including multiple elevation classes, i.e. glacier_mec)
-              h2osno_col(c) = 0.5_r8*h2osno_max   ! start with half full snow column, representing deep firn
-              snow_depth_col(c)  = h2osno_col(c) / bdfirn
+              ! 20251002 !CSZ:Use below Northern Hemisphere seasonal snow cold-start initialization on glaciers too
+              ! h2osno_col(c) = 0.5_r8*h2osno_max   ! start with half full snow column, representing deep firn
+              ! snow_depth_col(c)  = h2osno_col(c) / bdfirn
+              h2osno_col(c) = 50._r8
+              snow_depth_col(c) = h2osno_col(c) / bdsno
            else if (col_pp%is_soil(c) .and. grc_pp%latdeg(g) >= 44._r8) then
               ! Northern hemisphere seasonal snow
               h2osno_col(c) = 50._r8
