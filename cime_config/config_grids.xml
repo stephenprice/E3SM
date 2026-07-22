@@ -6869,16 +6869,26 @@
     </gridmap>
 
     <gridmap glc_grid="mpas.gis1to10kmR2" ocn_grid="RRSwISC6to18E3r5">
-      <-map name="OCN2GLC_SHELF_FMAPNAME">cpl/gridmaps/RRSwISC6to18E3r5/map_RRSwISC6to18E3r5_to_gis1to10kmR2_esmfaave.2026XXXX.nc</map>
-      <map name="OCN2GLC_SHELF_SMAPNAME">cpl/gridmaps/RRSwISC6to18E3r5/map_RRSwISC6to18E3r5_to_gis1to10kmR2_esmfbilin.2026XXXX.nc</map>
-      <!-- note that comments above about ocean / gutter overlap apply here as well ... need to fix this -->
-      <!--map name="OCN2GLC_TF_SMAPNAME">cpl/gridmaps/RRSwISC6to18E3r5/map_RRSwISC6to18E3r5_to_gis1to10kmR2_deeperThan1400m.esmfneareststod.2026XXXX.nc</map-->
-      <map name="GLC2ICE_FMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5_esmfaave.2026XXXX.nc</map>
-      <map name="GLC2ICE_SMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5_esmfaave.2026XXXX.nc</map>
-      <map name="GLC2OCN_FMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5_esmfaave.2026XXXX.nc</map>
-      <map name="GLC2OCN_SMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5_esmfaave.2026XXXX.nc</map>
-      <map name="GLC2OCN_LIQ_RMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5_r150e300.cstmnn.2026XXXX.nc</map>
-      <map name="GLC2OCN_ICE_RMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_r150e300.cstmnn.2026XXXX.nc</map>
+      <!-- map name="OCN2GLC_SHELF_FMAPNAME">cpl/gridmaps/RRSwISC6to18E3r5/map_RRSwISC6to18E3r5-nomask_to_gis1to10kmR2_esmfaave.20260707.nc</map-->
+      <!--map name="OCN2GLC_SHELF_SMAPNAME">cpl/gridmaps/RRSwISC6to18E3r5/map_RRSwISC6to18E3r5-nomask_to_gis1to10kmR2_esmfbilin.20260707.nc</map-->
+      <!-- note that comments above about ocean / gutter overlap apply here as well ... need to fix this eventually? -->
+      <!--map name="OCN2GLC_TF_SMAPNAME">cpl/gridmaps/RRSwISC6to18E3r5/map_RRSwISC6to18E3r5_to_gis1to10kmR2_deeperThan1400m.esmfneareststod.20260721.nc</map-->
+      <!--map name="GLC2ICE_FMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_esmfaave.20260707.nc</map-->
+      <!--map name="GLC2ICE_SMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_esmfaave.20260707.nc</map-->
+      <!--map name="GLC2OCN_FMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_esmfaave.20260707.nc</map-->
+      <!--map name="GLC2OCN_SMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_esmfaave.20260707.nc</map-->
+      <!--map name="GLC2OCN_LIQ_RMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5_r150e300.cstmnn.20260715.nc</map-->
+      <!--map name="GLC2OCN_ICE_RMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_r150e300.cstmnn.20260715.nc</map-->
+      <map name="OCN2GLC_SHELF_FMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_RRSwISC6to18E3r5-nomask_to_gis1to10kmR2_esmfaave.20260707.nc</map>
+      <map name="OCN2GLC_SHELF_SMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_RRSwISC6to18E3r5-nomask_to_gis1to10kmR2_esmfbilin.20260707.nc</map>
+      <!-- note that comments above about ocean / gutter overlap apply here as well ... need to fix this eventually? -->
+      <map name="OCN2GLC_TF_SMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_RRSwISC6to18E3r5_to_gis1to10kmR2_deeperThan1400m.esmfneareststod.20260721.nc</map>
+      <map name="GLC2ICE_FMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_esmfaave.20260707.nc</map>
+      <map name="GLC2ICE_SMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_esmfaave.20260707.nc</map>
+      <map name="GLC2OCN_FMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_esmfaave.20260707.nc</map>
+      <map name="GLC2OCN_SMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_esmfaave.20260707.nc</map>
+      <map name="GLC2OCN_LIQ_RMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_gis1to10kmR2_to_RRSwISC6to18E3r5_r150e300.cstmnn.20260715.nc</map>
+      <map name="GLC2OCN_ICE_RMAPNAME">/lcrc/group/acme/ac.jwolfe/v3-grids/gis1to10kmR2/map_gis1to10kmR2_to_RRSwISC6to18E3r5-nomask_r150e300.cstmnn.20260715.nc</map>
     </gridmap>
 
     <!-- ====================  -->
