@@ -1,7 +1,6 @@
 #include "eamxx_output_manager.hpp"
 
 #include "share/scorpio_interface/eamxx_scorpio_interface.hpp"
-#include "share/io/scorpio_input.hpp"
 #include "share/physics/physics_constants.hpp"
 #include "share/util/eamxx_timing.hpp"
 #include "share/core/eamxx_config.hpp"
@@ -861,7 +860,6 @@ setup_file (      IOFileSpecs& filespecs,
       const auto& c = pc_dict.at(n);
       scorpio::define_var (filename, n, c.units.to_string(), {},
                            "real", "real", false);
-      scorpio::write_var (filename, n, &c.value);
     }
   }
 
@@ -910,6 +908,16 @@ setup_file (      IOFileSpecs& filespecs,
 
   scorpio::enddef (filename);
 
+  // Write the constants to the output file
+  if (!m_resume_output_file) {
+    const auto& pc_names = m_params.get<std::vector<std::string>>("constants",{});
+    const auto& pc_dict = physics::Constants<Real>::dictionary();
+    for (const auto& n: pc_names) {
+      const auto& c = pc_dict.at(n);
+      scorpio::write_var (filename, n, &c.value);
+    }
+  }
+
   if (m_save_grid_data and not filespecs.is_restart_file() and not m_resume_output_file) {
     // Immediately run the geo data streams
     for (const auto& it : m_geo_data_streams) {
@@ -951,7 +959,9 @@ void OutputManager::set_file_header(const IOFileSpecs& file_specs)
   set_str_att("atm_initial_conditions_file",p.get<std::string>("initial_conditions_file","NONE"));
   set_str_att("topography_file",p.get<std::string>("topography_file","NONE"));
   set_str_att("contact","e3sm-data-support@llnl.gov");
+  set_str_att("license","http://spdx.org/licenses/CC-BY-4.0 (CC-BY-4.0)");
   set_str_att("institution_id","E3SM-Project");
+  set_str_att("institution","LLNL (Lawrence Livermore National Laboratory); ANL (Argonne National Laboratory); BNL (Brookhaven National Laboratory); LANL (Los Alamos National Laboratory); LBNL (Lawrence Berkeley National Laboratory); ORNL (Oak Ridge National Laboratory); PNNL (Pacific Northwest National Laboratory); SNL (Sandia National Laboratories). Mailing address: LLNL Climate Program, c/o Peter M. Caldwell, Principal Investigator, L-103, 7000 East Avenue, Livermore, CA 94550, USA");
   set_str_att("realm","atmos");
   set_str_att("history",ts_str);
   set_str_att("Conventions","CF-1.8");

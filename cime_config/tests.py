@@ -4,7 +4,7 @@
 # suite_name : {
 #     "inherit" : (suite1, suite2, ...), # Optional. Suites to inherit tests from. Default is None. Tuple, list, or str.
 #     "time"    : "HH:MM:SS",            # Optional. Recommended upper-limit on test time.
-#     "share"   : True|False,            # Optional. If True, all tests in this suite share a build. Default is False.
+#     "share"   : True|False|"testname", # Optional. If True, all tests share a build (first in suite order leads). If a test name string, that test's build is shared. Default is False.
 #     "tests"   : (test1, test2, ...)    # Optional. The list of tests for this suite. See above for format. Tuple, list, or str.
 # }
 
@@ -516,7 +516,8 @@ _TESTS = {
             "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_st3",
             "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_pphys",
             "SMS_D_Ld15.f45_g37.IELMFATES.elm-fates_cold_twostream",
-            "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_managedfire"
+            "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_managedfire",
+            "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_nocomp_dbhinit"
             )
         },
 
@@ -807,7 +808,7 @@ _TESTS = {
     },
 
     "e3sm_eamxx_v1_long_crusher" : {
-        # _D builds take a long longer on crusher than ascent or pm-gpu, so
+        # _D builds take a long longer on crusher than pm-gpu, so
         # don't run the long _D test.
         "time"  : "01:00:00",
         "tests" : (
