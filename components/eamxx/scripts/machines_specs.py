@@ -261,7 +261,7 @@ class GHCISNLGNU(Machine):
     @classmethod
     def setup(cls):
         super().setup_base("ghci-snl-gnu")
-        cls.baselines_dir = "/projects/e3sm/baselines/scream/ghci-snl-gnu"
+        cls.baselines_dir = "/projects/e3sm/data/baselines/scream/ghci-snl-gnu"
         cls.env_setup = ["export GATOR_INITIAL_MB=4000MB"]
 
 ###############################################################################
@@ -271,7 +271,7 @@ class GHCISNLOneAPI(Machine):
     @classmethod
     def setup(cls):
         super().setup_base("ghci-snl-oneapi")
-        cls.baselines_dir = "/projects/e3sm/baselines/scream/ghci-snl-oneapi"
+        cls.baselines_dir = "/projects/e3sm/data/baselines/scream/ghci-snl-oneapi"
         cls.env_setup = ["export GATOR_INITIAL_MB=4000MB",
                          "export OMPI_MCA_io=romio321"]
 
@@ -282,7 +282,7 @@ class GHCISNLCuda(Machine):
     @classmethod
     def setup(cls):
         super().setup_base(name="ghci-snl-cuda")
-        cls.baselines_dir = "/projects/e3sm/baselines/scream/ghci-snl-cuda"
+        cls.baselines_dir = "/projects/e3sm/data/baselines/scream/ghci-snl-cuda"
         cls.gpu_arch = "cuda"
         cls.num_run_res = int(run_cmd_no_fail("nvidia-smi --query-gpu=name --format=csv,noheader | wc -l"))
 
@@ -386,6 +386,7 @@ class AnlGceUb22(Machine):
                          "module load gcc/12.1.0",
                          "export LD_LIBRARY_PATH=/nfs/gce/projects/climate/software/linux-ubuntu22.04-x86_64/mpich/4.1.2/gcc-12.1.0/lib:$LD_LIBRARY_PATH",
                          "export PATH=/nfs/gce/projects/climate/software/linux-ubuntu22.04-x86_64/mpich/4.1.2/gcc-12.1.0/bin:/nfs/gce/projects/climate/software/linux-ubuntu22.04-x86_64/netcdf/4.8.0c-4.3.1cxx-4.5.3f-serial/gcc-12.1.0/bin:$PATH",
+                          "export HDF5_ROOT=/nfs/gce/projects/climate/software/linux-ubuntu22.04-x86_64/hdf5/1.14.6/mpich-4.1.2/gcc-12.1.0-mt",
                          "export NetCDF_ROOT=/nfs/gce/projects/climate/software/linux-ubuntu22.04-x86_64/netcdf/4.8.0c-4.3.1cxx-4.5.3f-serial/gcc-12.1.0",
                          "export PERL5LIB=/nfs/gce/projects/climate/software/perl5/lib/perl5"
                         ]

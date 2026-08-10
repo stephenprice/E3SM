@@ -71,7 +71,7 @@ env:
 
 defaults:
   run:
-    shell: bash --login {0}
+    shell: bash -leo pipefail {0}
 
 jobs:
   gnu-openmp:
@@ -91,7 +91,7 @@ jobs:
     name: gnu-openmp / ${{ matrix.build_type }}
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
           show-progress: false
@@ -125,7 +125,7 @@ jobs:
     name: oneapi-openmp / ${{ matrix.build_type }}
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
           show-progress: false
@@ -151,7 +151,7 @@ jobs:
           github.event.inputs.job_to_run == 'all'
         )
       }}
-    runs-on:  [self-hosted, ghci-snl, cuda, gnu]
+    runs-on:  [self-hosted, ghci-snl, cuda]
     strategy:
       fail-fast: false
       matrix:
@@ -165,7 +165,7 @@ jobs:
     name: gnu-cuda / ${{ matrix.test.build_type }}
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
           show-progress: false

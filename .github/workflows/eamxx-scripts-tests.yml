@@ -37,14 +37,14 @@ env:
 
 defaults:
   run:
-    shell: bash --login {0}
+    shell: bash -leo pipefail {0}
 
 jobs:
   gnu:
     runs-on:  [self-hosted, gnu, ghci-snl]
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
           show-progress: false

@@ -4,7 +4,7 @@
 # suite_name : {
 #     "inherit" : (suite1, suite2, ...), # Optional. Suites to inherit tests from. Default is None. Tuple, list, or str.
 #     "time"    : "HH:MM:SS",            # Optional. Recommended upper-limit on test time.
-#     "share"   : True|False,            # Optional. If True, all tests in this suite share a build. Default is False.
+#     "share"   : True|False|"testname", # Optional. If True, all tests share a build (first in suite order leads). If a test name string, that test's build is shared. Default is False.
 #     "tests"   : (test1, test2, ...)    # Optional. The list of tests for this suite. See above for format. Tuple, list, or str.
 # }
 
@@ -396,7 +396,7 @@ _TESTS = {
     "e3sm_extra_coverage" : {
         "inherit" : ("e3sm_atm_extra_coverage", "e3sm_ocnice_extra_coverage"),
         "tests"   : (
-            "SMS_Vmct_D_Ln3.TL319_EC30to60E2r2_wQU225EC30to60E2r2.GMPAS-JRA1p5-WW3.ww3-jra_1958",
+            "SMS_Vmct_D_Ln3.TL319_IcoswISC30E3r5_wQU225Icos30E3r5.GMPAS-JRA1p5-WW3.ww3-jra_1958",
             )
         },
 
@@ -406,6 +406,7 @@ _TESTS = {
         "tests"   : (
             "SMS_Ld3.ne120pg2_r025_RRSwISC6to18E3r5.WCYCL1850NS.eam-cosplite",
             "SMS.T62_SOwISC12to30E3r3.GMPAS-IAF",
+            "SMS_Ld3.ne30pg2_r05_SOwISC12to30E3r3.CRYO1850-CMIP7",
             )
         },
 
@@ -435,6 +436,7 @@ _TESTS = {
             "SMS_Ld1.ne30pg2_r05_IcoswISC30E3r5.WCYCLSSP370.allactive-wcprodssp",
             "SMS_Ld1.ne30pg2_r05_IcoswISC30E3r5.WCYCLSSP585.allactive-wcprodssp",
             "SMS_Ld1_P512.northamericax4v1pg2_r025_IcoswISC30E3r5.WCYCL1850.allactive-wcprodrrm_1850",
+            "SMS_Vmct_D_Ld1.TL319_IcoswISC30E3r5_wQU225Icos30E3r5.GMPAS-JRA1p5-WW3.ww3-jra_1958",
             "SMS_D_Ld1.ne30pg2_r05_IcoswISC30E3r5.CRYO1850",
             "SMS_D_Ld1.ne30pg2_r05_IcoswISC30E3r5.CRYO1850-CMIP7",
             )
@@ -516,7 +518,8 @@ _TESTS = {
             "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_st3",
             "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_pphys",
             "SMS_D_Ld15.f45_g37.IELMFATES.elm-fates_cold_twostream",
-            "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_managedfire"
+            "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_managedfire",
+            "ERS_Ld60.f45_g37.IELMFATES.elm-fates_cold_nocomp_dbhinit"
             )
         },
 
