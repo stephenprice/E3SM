@@ -2389,15 +2389,19 @@ contains
      ! An optional latitude-band gate restricts the cooling to columns
      ! equatorward of convert_ice_to_river_runoff_latband_width_degrees.
      !
+     ! The extraction is distributed across active snow layers in proportion
+     ! to each layer's ice mass, so layers holding more of the column's ice
+     ! bear proportionally more of the latent-heat removal.
+     !
      ! !ARGUMENTS:
      type(bounds_type), intent(in) :: bounds
      !
      ! !LOCAL VARIABLES:
      real(r8)   :: dtime                            ! land model time step (sec)
-     integer    :: c, j, g, k, n_active             ! counters
+     integer    :: c, j, g, n_active                ! counters
      real(r8)   :: e_cooling                        ! column energy removed [J/m2]
      real(r8)   :: c_layer                          ! layer heat capacity [J/m2/K]
-     real(r8)   :: wsum, wraw                       ! weight sum and layer weight [-]
+     real(r8)   :: ice_mass_sum                     ! total ice mass across active layers [kg/m2]
      real(r8)   :: lat_abs_deg                      ! absolute gridcell latitude [deg]
      real(r8)   :: area_col_m2                      ! column area [m2]
      real(r8)   :: delta_t_layer                    ! layer temperature change [K]
@@ -2411,7 +2415,6 @@ contains
      integer    :: step_cols_loc                    ! local per-call affected column count
      logical    :: apply_cooling                    ! whether to cool snowpack in this column
      real(r8), parameter :: tiny_heatcap = 1.e-14_r8  ! minimum layer heat capacity [J/m2/K]
-     logical,  parameter :: snowcap_surface_weighted_cooling = .false.
      !-----------------------------------------------------------------------
 
      associate( &
@@ -2452,45 +2455,29 @@ contains
         e_cooling = qflx_snwcp_ice(c) * dtime * hfus
         if (e_cooling <= 0._r8) cycle
 
-        ! Count active snow layers (those with meaningful heat capacity)
+        ! Count active snow layers (those with meaningful heat capacity) and
+        ! sum their ice mass, which sets how much of the extraction each layer bears.
         n_active = 0
-        do j = snl(c)+1, 0
-           c_layer = cpice*h2osoi_ice(c,j) + cpliq*h2osoi_liq(c,j)
-           if (c_layer > tiny_heatcap) n_active = n_active + 1
-        end do
-        if (n_active == 0) cycle
-
-        ! Compute weight sum for distributing cooling across layers
-        wsum = 0._r8
-        k = 0
+        ice_mass_sum = 0._r8
         do j = snl(c)+1, 0
            c_layer = cpice*h2osoi_ice(c,j) + cpliq*h2osoi_liq(c,j)
            if (c_layer > tiny_heatcap) then
-              k = k + 1
-              if (snowcap_surface_weighted_cooling) then
-                 wraw = real(n_active-k+1, r8)
-              else
-                 wraw = 1._r8
-              end if
-              wsum = wsum + wraw
+              n_active = n_active + 1
+              ice_mass_sum = ice_mass_sum + h2osoi_ice(c,j)
            end if
         end do
-        if (wsum <= 0._r8) cycle
+        if (n_active == 0 .or. ice_mass_sum <= 0._r8) cycle
 
-        ! Distribute cooling through snow layers
-        k = 0
+        ! Distribute cooling through snow layers in proportion to each layer's
+        ! ice mass (a layer holding 90% of the column's ice mass bears 90% of
+        ! the latent-heat extraction); the resulting temperature change per
+        ! layer still depends on that layer's own heat capacity.
         delta_t_col_mean = 0._r8
         cooling_col_max  = 0._r8
         do j = snl(c)+1, 0
            c_layer = cpice*h2osoi_ice(c,j) + cpliq*h2osoi_liq(c,j)
            if (c_layer > tiny_heatcap) then
-              k = k + 1
-              if (snowcap_surface_weighted_cooling) then
-                 wraw = real(n_active-k+1, r8)
-              else
-                 wraw = 1._r8
-              end if
-              delta_t_layer = (e_cooling * (wraw/wsum)) / c_layer
+              delta_t_layer = (e_cooling * (h2osoi_ice(c,j)/ice_mass_sum)) / c_layer
               t_soisno(c,j) = t_soisno(c,j) - delta_t_layer
               delta_t_col_mean = delta_t_col_mean + delta_t_layer
               cooling_col_max = max(cooling_col_max, delta_t_layer)
