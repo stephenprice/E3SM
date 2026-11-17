@@ -2385,6 +2385,16 @@
 
     <!--- mali grids with GIS -->
 
+    <model_grid alias="u04_u04" compset="_MALI">
+      <grid name="atm">u04-lr12p5</grid>
+      <grid name="lnd">u04-lr12p5</grid>
+      <grid name="ocnice">u04-oi6to18</grid>
+      <grid name="rof">u04-lr12p5</grid>
+      <grid name="glc">mpas.gis1to10kmR3</grid>
+      <grid name="wav">null</grid>
+      <mask>u04-oi6to18</mask>
+    </model_grid>
+
     <model_grid alias="TL319_IcoswISC30E3r5_gis1to10kmR2" compset="_MALI">
       <grid name="atm">TL319</grid>
       <grid name="lnd">TL319</grid>
@@ -4255,6 +4265,12 @@
       <nx>427386</nx>
       <ny>1</ny>
       <desc>mpas.gis1to10kmR2 is an updated (fewer grid cells; improved optimization) variable-resolution, from 1- to 10-km, MALI grid of the Greenland Ice Sheet.</desc>
+    </domain>
+
+    <domain name="mpas.gis1to10kmR3">
+      <nx>829112</nx>
+      <ny>1</ny>
+      <desc>mpas.gis1to10kmR3 is an updated, variable-resolution, from 1- to 10-km, MALI grid of the Greenland Ice Sheet; updates include improved optimization and extended ocn overlap at margins.</desc>
     </domain>
 
     <domain name="mpas.ais20km">
@@ -7532,6 +7548,22 @@
       <map name="GLC2OCN_SMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_IcoswISC30E3r5_esmfaave.20240403.nc</map>
       <map name="GLC2OCN_LIQ_RMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_IcoswISC30E3r5_r150e300.cstmnn.20250326.nc</map>
       <map name="GLC2OCN_ICE_RMAPNAME">cpl/gridmaps/mpas.gis1to10km/map_gis1to10kmR2_to_IcoswISC30E3r5-nomask_r150e300.cstmnn.20250403.nc</map>
+    </gridmap>
+
+    <!-- ======================  -->
+    <!-- GLC: mpas.gis1to10kmR3  -->
+    <!-- ======================  -->
+      
+    <gridmap glc_grid="mpas.gis1to10kmR3" ocn_grid="u04-oi6to18">
+      <map name="OCN2GLC_SHELF_FMAPNAME">cpl/gridmaps/u04/map_u04-oi6to18_to_gis1to10kmR3_esmfaave.2026XXXX.nc</map>
+      <map name="OCN2GLC_SHELF_SMAPNAME">cpl/gridmaps/u04/map_u04-oi6to18_to_gis1to10kmR3_esmfbilin.2026XXXX.nc</map>
+      <map name="OCN2GLC_TF_SMAPNAME">cpl/gridmaps/u04/map_u04-oi6to18-nomask_to_gis1to10kmR3_esmfbilin.2026XXXX.nc</map>
+      <map name="GLC2ICE_FMAPNAME">cpl/gridmaps/mpas.gis1to10kmR3/map_gis1to10kmR3_to_u04-oi6to18_esmfaave.2026XXXX.nc</map>
+      <map name="GLC2ICE_SMAPNAME">cpl/gridmaps/mpas.gis1to10kmR3/map_gis1to10kmR3_to_u04-oi6to18_esmfaave.2026XXXX.nc</map>
+      <map name="GLC2OCN_FMAPNAME">cpl/gridmaps/mpas.gis1to10kmR3/map_gis1to10kmR3_to_u04-oi6to18_esmfaave.2026XXXX.nc</map>
+      <map name="GLC2OCN_SMAPNAME">cpl/gridmaps/mpas.gis1to10kmR3/map_gis1to10kmR3_to_u04-oi6to18_esmfaave.2026XXXX.nc</map>
+      <map name="GLC2OCN_LIQ_RMAPNAME">cpl/gridmaps/mpas.gis1to10kmR3/map_gis1to10kmR3_to_u04-oi6to18_r150e300.cstmnn.2026XXXX.nc</map>
+      <map name="GLC2OCN_ICE_RMAPNAME">cpl/gridmaps/mpas.gis1to10kmR3/map_gis1to10kmR3_to_u04-oi6to18-nomask_r150e300.cstmnn.2026XXXX.nc</map>
     </gridmap>
 
     <!-- ====================  -->

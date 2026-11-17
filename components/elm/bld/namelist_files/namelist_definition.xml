@@ -226,6 +226,7 @@ Glacier model grid
     mpas.gis4to40km = Greenland at 4-to-40km variable resolution
     mpas.gis1to10km = Greenland at 1-to-10km variable resolution (v1, kept for backwards compatibility)
     mpas.gis1to10kmR2 = Greenland at 1-to-10km variable resolution (v2, improved init. cond., fewer total grid cells)
+    mpas.gis1to10kmR3 = Greenland at 1-to-10km variable resolution (v3, improved init. cond., extended no. of empty margin cells for ocean overlap)
 </entry>
 
 <entry id="glc_smb" type="logical" category="elm_physics"
